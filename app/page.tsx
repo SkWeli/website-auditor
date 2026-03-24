@@ -39,6 +39,126 @@ export default function Home() {
     }
   };
 
+    const downloadReport = async () => {
+    if (!result) return;
+
+    const jsPDFModule = await import("jspdf");
+    const jsPDF = jsPDFModule.default;
+    const doc = new jsPDF();
+
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const contentWidth = pageWidth - margin * 2;
+    let y = 20;
+
+    const addText = (text: string, size: number, bold = false, color = "#000000") => {
+      doc.setFontSize(size);
+      doc.setFont("helvetica", bold ? "bold" : "normal");
+      doc.setTextColor(color);
+      const lines = doc.splitTextToSize(text, contentWidth);
+      lines.forEach((line: string) => {
+        if (y > 270) { doc.addPage(); y = 20; }
+        doc.text(line, margin, y);
+        y += size * 0.5;
+      });
+      y += 3;
+    };
+
+    const addDivider = () => {
+      doc.setDrawColor("#e2e8f0");
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 6;
+    };
+
+    doc.setFillColor("#0f172a");
+    doc.rect(0, 0, pageWidth, 35, "F");
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor("#ffffff");
+    doc.text("Website Audit Report", margin, 22);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor("#94a3b8");
+    doc.text(`Generated: ${new Date().toLocaleString()}`, margin, 30);
+    y = 50;
+
+    addText(`Audited URL: ${result.metrics.url}`, 10, false, "#3b82f6");
+    addDivider();
+
+    addText("FACTUAL METRICS", 13, true, "#000000");
+    y += 2;
+
+    const metrics = [
+      ["Word Count", result.metrics.wordCount.toLocaleString()],
+      ["H1 / H2 / H3", `${result.metrics.headings.h1} / ${result.metrics.headings.h2} / ${result.metrics.headings.h3}`],
+      ["CTAs Found", String(result.metrics.ctaCount)],
+      ["Internal Links", String(result.metrics.links.internal)],
+      ["External Links", String(result.metrics.links.external)],
+      ["Total Images", String(result.metrics.images.total)],
+      ["Missing Alt Text", `${result.metrics.images.missingAlt} (${result.metrics.images.missingAltPercent})`],
+      ["Meta Title", result.metrics.meta.title || "Not found"],
+      ["Meta Description", result.metrics.meta.description || "Not found"],
+    ];
+
+    metrics.forEach(([label, value]) => {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor("#374151");
+      doc.text(`${label}:`, margin, y);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor("#111827");
+      const lines = doc.splitTextToSize(value, contentWidth - 60);
+      doc.text(lines, margin + 55, y);
+      y += 7 * lines.length;
+      if (y > 270) { doc.addPage(); y = 20; }
+    });
+
+    y += 4;
+    addDivider();
+    addText("AI INSIGHTS", 13, true, "#000000");
+    y += 2;
+
+    const insights = [
+      ["SEO Structure", result.insights.seoStructure],
+      ["Messaging Clarity", result.insights.messagingClarity],
+      ["CTA Usage", result.insights.ctaUsage],
+      ["Content Depth", result.insights.contentDepth],
+      ["UX Concerns", result.insights.uxConcerns],
+    ];
+
+    insights.forEach(([label, content]) => {
+      addText(label, 11, true, "#1e40af");
+      addText(content, 10, false, "#374151");
+      y += 2;
+      if (y > 270) { doc.addPage(); y = 20; }
+    });
+
+    addDivider();
+    addText("PRIORITIZED RECOMMENDATIONS", 13, true, "#000000");
+    y += 2;
+
+    result.insights.recommendations.forEach((rec) => {
+      if (y > 250) { doc.addPage(); y = 20; }
+      addText(`${rec.priority}. ${rec.issue}`, 11, true, "#dc2626");
+      addText(`Action: ${rec.action}`, 10, false, "#374151");
+      addText(`Why: ${rec.reasoning}`, 10, false, "#6b7280");
+      y += 3;
+    });
+
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor("#94a3b8");
+      doc.text(`Website Auditor - Page ${i} of ${pageCount}`, margin, 290);
+    }
+
+    const filename = `audit-${new URL(result.metrics.url).hostname}-${Date.now()}.pdf`;
+    doc.save(filename);
+  };
+
+
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", fontFamily: "var(--font-body)" }}>
 
@@ -223,6 +343,27 @@ export default function Home() {
         {/* Results */}
         {result && (
           <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+
+            {/* Download Button */}
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
+              <button
+                onClick={downloadReport}
+                style={{
+                  background: "var(--surface-1)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius-sm)",
+                  padding: "8px 18px",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: "var(--ink-3)",
+                  cursor: "pointer",
+                  letterSpacing: "0.3px",
+                }}
+              >
+                Download Report
+              </button>
+            </div>
+
 
             {/* FACTUAL METRICS */}
             <section style={{ paddingBottom: 56, marginBottom: 56, borderBottom: "1px solid var(--border)" }}>
