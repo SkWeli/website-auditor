@@ -1,0 +1,86 @@
+# ===========================
+# Dependencies
+# ===========================
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ===========================
+# Next.js
+# ===========================
+.next/
+out/
+build/
+dist/
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ===========================
+# Vercel
+# ===========================
+.vercel
+
+# ===========================
+# TypeScript
+# ===========================
+*.tsbuildinfo
+next-env.d.ts
+
+# ===========================
+# OS Files
+# ===========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===========================
+# IDE & Editor
+# ===========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===========================
+# Testing
+# ===========================
+coverage/
+.nyc_output/
+
+# ===========================
+# Misc
+# ===========================
+*.pem
+.cache/
+tmp/
+temp/
