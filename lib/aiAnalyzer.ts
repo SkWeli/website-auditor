@@ -32,6 +32,12 @@ export interface AIAnalysisResult {
 
 const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
+const MODEL_FALLBACKS = [
+  "gemini-2.5-flash",
+  "gemini-3.1-flash-lite",
+  "gemini-2.5-flash-lite",
+];
+
 export async function analyzeWithAI(
   metrics: ScrapedMetrics
 ): Promise<AIAnalysisResult> {
@@ -91,27 +97,44 @@ Return a JSON object with exactly these keys:
 
 Provide 3-5 recommendations ordered by priority (1 = most important).`;
 
-  // FULL REQUEST OBJECT (logged for transparency) 
-  const fullRequest = {
-    model: "gemini-2.5-flash",
-    systemPrompt,
-    userPrompt,
-  };
+  // FALLBACK MODEL CHAIN 
+  let rawModelOutput = "";
+  let usedModel = "";
 
-  // CALL THE MODEL 
-  const model = client.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-      temperature: 0.4,
-    } as object,
-  });
+  for (const modelName of MODEL_FALLBACKS) {
+    try {
+      const model = client.getGenerativeModel({
+        model: modelName,
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.4,
+        } as object,
+      });
 
-  const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
-  const geminiResponse = await model.generateContent(fullPrompt);
-  const rawModelOutput = geminiResponse.response.text();
+      const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
+      const geminiResponse = await model.generateContent(fullPrompt);
+      rawModelOutput = geminiResponse.response.text();
+      usedModel = modelName;
+      console.log(`[AI] Successfully used model: ${usedModel}`);
+      break;
+    } catch (err: unknown) {
+      const isQuota =
+        err instanceof Error && err.message.includes("429");
+      if (isQuota) {
+        console.warn(`[AI] Quota exceeded on ${modelName}, trying next...`);
+        continue;
+      }
+      throw err;
+    }
+  }
 
-  // PARSE JSON
+  if (!rawModelOutput) {
+    throw new Error(
+      "All AI models exhausted their quota. Please try again tomorrow."
+    );
+  }
+
+  // PARSE JSON 
   let insights: AIInsights;
   try {
     insights = JSON.parse(rawModelOutput) as AIInsights;
@@ -125,7 +148,11 @@ Provide 3-5 recommendations ordered by priority (1 = most important).`;
   const promptLog: PromptLog = {
     systemPrompt,
     userPrompt,
-    fullRequest,
+    fullRequest: {
+      model: usedModel,
+      systemPrompt,
+      userPrompt,
+    },
     rawModelOutput,
     parsedAt: new Date().toISOString(),
   };
