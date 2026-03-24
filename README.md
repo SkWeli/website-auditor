@@ -66,7 +66,7 @@ POST /api/audit - Next.js API Route
 ## AI Design Decisions
 
 ### 1. Strict separation between scraping and AI
-All metrics are extracted in pure code before the AI is involved. The AI never scrapes — it only receives structured data. This makes the insights verifiable and prevents hallucinated metrics.
+All metrics are extracted in pure code before the AI is involved. The AI never scrapes - it only receives structured data. This makes the insights verifiable and prevents hallucinated metrics.
 
 ### 2. Metrics-grounded prompting
 The system prompt explicitly forbids generic advice and requires the model to cite specific numbers from the extracted data (e.g. *"With only 1 H1 and 0 H2s..."*). This is enforced in the prompt itself, not just hoped for.
@@ -96,12 +96,12 @@ No caching - Every audit hits the live page and AI model. Adding Redis caching f
 
 ## What I'd Improve With More Time
 
-- **JavaScript rendering** — Use Puppeteer or Playwright to handle SPAs and dynamically loaded content
-- **Audit scoring** — Generate a 0–100 score per category so users can track improvements over time
-- **Multi-page crawl** — Extend the tool to audit up to 5 pages and surface site-wide patterns
-- **Caching** — Cache audit results by URL + timestamp to reduce redundant API calls
-- **Export** — Allow users to download the full audit as a PDF report
-- **History** — Save past audits to compare before/after changes
+- **JavaScript rendering** - Use Puppeteer or Playwright to handle SPAs and dynamically loaded content
+- **Audit scoring** - Generate a 0–100 score per category so users can track improvements over time
+- **Multi-page crawl** - Extend the tool to audit up to 5 pages and surface site-wide patterns
+- **Caching** - Cache audit results by URL + timestamp to reduce redundant API calls
+- **Export** - Allow users to download the full audit as a PDF report
+- **History** - Save past audits to compare before/after changes
 
 ---
 
