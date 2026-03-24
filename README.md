@@ -18,37 +18,45 @@ An AI-powered website audit tool built for the Eight25Media engineering assessme
 ## Architecture Overview
 
 User Input (URL)
-↓
-POST /api/audit (Next.js API Route)
-↓
-┌─────────────────────────────────┐
-│ Scraping Layer (lib/scraper.ts)│
-│ · Cheerio parses raw HTML │
-│ · Extracts: word count, │
-│ headings, CTAs, links, │
-│ images, alt text, meta tags │
-│ · Zero AI involvement │
-└──────────────┬──────────────────┘
-↓
-┌─────────────────────────────────┐
-│ AI Layer (lib/aiAnalyzer.ts) │
-│ · Scraped metrics injected │
-│ into structured prompt │
-│ · Gemini 2.5 Flash called │
-│ with JSON response mode │
-│ · Raw output captured before │
-│ parsing (logged) │
-└──────────────┬──────────────────┘
-↓
-Combined JSON Response
-{ metrics, insights, promptLog }
-↓
-┌─────────────────────────────────┐
-│ Frontend (app/page.tsx) │
-│ · Factual Metrics panel │
-│ · AI Insights panel │
-│ · Collapsible Prompt Log panel │
-└─────────────────────────────────┘
+       ↓
+POST /api/audit  ── Next.js API Route
+       ↓
+┌─────────────────────────────────────┐
+│        Scraping Layer               │
+│        lib/scraper.ts               │
+│                                     │
+│  -  Cheerio parses raw HTML          │
+│  -  Extracts: word count, headings,  │
+│    CTAs, links, images, alt text,   │
+│    meta title, meta description     │
+│  -  Zero AI involvement              │
+└──────────────────┬──────────────────┘
+                   ↓
+┌─────────────────────────────────────┐
+│          AI Layer                   │
+│          lib/aiAnalyzer.ts          │
+│                                     │
+│  -  Scraped metrics injected into    │
+│    structured prompt                │
+│  -  Gemini 2.5 Flash called with     │
+│    JSON response mode               │
+│  -  Raw output captured before       │
+│    parsing (logged)                 │
+│  -  Model fallback chain on quota    │
+└──────────────────┬──────────────────┘
+                   ↓
+     { metrics, insights, promptLog }
+                   ↓
+┌─────────────────────────────────────┐
+│         Frontend                    │
+│         app/page.tsx                │
+│                                     │
+│  -  Factual Metrics panel            │
+│  -  AI Insights panel                │
+│  -  Collapsible Prompt Log panel     │
+└─────────────────────────────────────┘
+
+
 
 
 ---
