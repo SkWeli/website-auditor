@@ -17,6 +17,7 @@ An AI-powered website audit tool built for the Eight25Media engineering assessme
 
 ## Architecture Overview
 
+```
 User Input (URL)
        ↓
 POST /api/audit  ── Next.js API Route
@@ -55,6 +56,7 @@ POST /api/audit  ── Next.js API Route
 │  -  AI Insights panel                │
 │  -  Collapsible Prompt Log panel     │
 └─────────────────────────────────────┘
+```
 
 
 
