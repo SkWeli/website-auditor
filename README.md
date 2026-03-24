@@ -20,30 +20,30 @@ An AI-powered website audit tool built for the Eight25Media engineering assessme
 ```
 User Input (URL)
        ↓
-POST /api/audit  ── Next.js API Route
+POST /api/audit - Next.js API Route
        ↓
 ┌─────────────────────────────────────┐
 │        Scraping Layer               │
 │        lib/scraper.ts               │
 │                                     │
-│  -  Cheerio parses raw HTML          │
-│  -  Extracts: word count, headings,  │
+│  -  Cheerio parses raw HTML         │
+│  -  Extracts: word count, headings, │
 │    CTAs, links, images, alt text,   │
 │    meta title, meta description     │
-│  -  Zero AI involvement              │
+│  -  Zero AI involvement             │
 └──────────────────┬──────────────────┘
                    ↓
 ┌─────────────────────────────────────┐
 │          AI Layer                   │
 │          lib/aiAnalyzer.ts          │
 │                                     │
-│  -  Scraped metrics injected into    │
+│  -  Scraped metrics injected into   │
 │    structured prompt                │
-│  -  Gemini 2.5 Flash called with     │
+│  -  Gemini 2.5 Flash called with    │
 │    JSON response mode               │
-│  -  Raw output captured before       │
+│  -  Raw output captured before      │
 │    parsing (logged)                 │
-│  -  Model fallback chain on quota    │
+│  -  Model fallback chain on quota   │
 └──────────────────┬──────────────────┘
                    ↓
      { metrics, insights, promptLog }
@@ -52,9 +52,9 @@ POST /api/audit  ── Next.js API Route
 │         Frontend                    │
 │         app/page.tsx                │
 │                                     │
-│  -  Factual Metrics panel            │
-│  -  AI Insights panel                │
-│  -  Collapsible Prompt Log panel     │
+│  -  Factual Metrics panel           │
+│  -  AI Insights panel               │
+│  -  Collapsible Prompt Log panel    │
 └─────────────────────────────────────┘
 ```
 
