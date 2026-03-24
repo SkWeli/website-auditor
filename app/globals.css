@@ -1,1 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
 @import "tailwindcss";
+
+:root {
+  --bg:           #ffffff;
+  --surface-1:    #f7f7f5;
+  --surface-2:    #efefec;
+  --surface-3:    #e5e5e1;
+  --border:       #e2e2de;
+  --border-dark:  #c8c8c2;
+
+  --ink:          #111110;
+  --ink-2:        #3d3d3a;
+  --ink-3:        #7a7a75;
+  --ink-4:        #afafaa;
+
+  --accent:       #1a56db;
+  --accent-light: #eff4ff;
+  --accent-border: #c7d7fc;
+
+  --danger:       #c0392b;
+  --danger-light: #fef2f2;
+  --danger-border: #fecaca;
+
+  --success:      #166534;
+  --success-light: #f0fdf4;
+  --success-border: #bbf7d0;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.08);
+
+  --font-display: 'Instrument Serif', serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
