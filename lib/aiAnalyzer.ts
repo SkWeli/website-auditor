@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ScrapedMetrics } from "./scraper";
 
 export interface AIInsights {
@@ -30,16 +30,14 @@ export interface AIAnalysisResult {
   promptLog: PromptLog;
 }
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function analyzeWithAI(
   metrics: ScrapedMetrics
 ): Promise<AIAnalysisResult> {
-  // SYSTEM PROMPT
+  // SYSTEM PROMPT 
   const systemPrompt = `You are a senior web strategist at a digital marketing agency 
-specializing in SEO, conversion optimization, content clarity, and UX. 
+specializing in SEO, conversion optimization, content clarity, and UX.
 
 You will receive structured metrics extracted from a webpage along with a sample of its text content.
 
@@ -59,28 +57,28 @@ URL: ${metrics.url}
 
 EXTRACTED METRICS:
 ${JSON.stringify(
-  {
-    wordCount: metrics.wordCount,
-    headings: metrics.headings,
-    ctaCount: metrics.ctaCount,
-    links: metrics.links,
-    images: metrics.images,
-    meta: metrics.meta,
-  },
-  null,
-  2
-)}
+    {
+      wordCount: metrics.wordCount,
+      headings: metrics.headings,
+      ctaCount: metrics.ctaCount,
+      links: metrics.links,
+      images: metrics.images,
+      meta: metrics.meta,
+    },
+    null,
+    2
+  )}
 
 PAGE CONTENT SAMPLE (first 3000 chars):
 "${metrics.pageTextSample}"
 
 Return a JSON object with exactly these keys:
 {
-  "seoStructure": "2-3 sentence analysis of SEO signals — reference H1/H2/H3 counts, meta title, meta description",
-  "messagingClarity": "2-3 sentence analysis of how clear the page message is — reference word count and content sample",
-  "ctaUsage": "2-3 sentence analysis of CTA effectiveness — reference ctaCount and link counts",
-  "contentDepth": "2-3 sentence analysis of content depth and quality — reference word count",
-  "uxConcerns": "2-3 sentence analysis of structural UX issues — reference image alt text %, heading hierarchy",
+  "seoStructure": "2-3 sentence analysis referencing H1/H2/H3 counts, meta title, meta description",
+  "messagingClarity": "2-3 sentence analysis referencing word count and content sample",
+  "ctaUsage": "2-3 sentence analysis referencing ctaCount and link counts",
+  "contentDepth": "2-3 sentence analysis referencing word count",
+  "uxConcerns": "2-3 sentence analysis referencing image alt text % and heading hierarchy",
   "recommendations": [
     {
       "priority": 1,
@@ -95,39 +93,36 @@ Provide 3-5 recommendations ordered by priority (1 = most important).`;
 
   // FULL REQUEST OBJECT (logged for transparency) 
   const fullRequest = {
-    model: "gpt-4o",
-    response_format: { type: "json_object" },
-    temperature: 0.4,
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt },
-    ],
+    model: "gemini-1.5-flash",
+    systemPrompt,
+    userPrompt,
   };
 
-  // CALL THE MODEL
-    const response = await client.chat.completions.create({
-    model: "gpt-4o",
-    response_format: { type: "json_object" },
-    temperature: 0.4,
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt },
-    ],
+  // CALL THE MODEL 
+  const model = client.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    generationConfig: {
+      responseMimeType: "application/json",
+      temperature: 0.4,
+    } as object,
   });
 
-  //CAPTURE RAW OUTPUT BEFORE PARSING  
-  const rawModelOutput = response.choices[0].message.content || "";
+  const fullPrompt = `${systemPrompt}\n\n${userPrompt}`;
+  const geminiResponse = await model.generateContent(fullPrompt);
+  const rawModelOutput = geminiResponse.response.text();
 
-  // PARSE JSON 
+  // PARSE JSON
   let insights: AIInsights;
   try {
     insights = JSON.parse(rawModelOutput) as AIInsights;
   } catch {
-    throw new Error(`Failed to parse AI response as JSON: ${rawModelOutput}`);
+    throw new Error(
+      `Failed to parse AI response as JSON: ${rawModelOutput}`
+    );
   }
 
-  // ── BUILD PROMPT LOG 
-    const promptLog: PromptLog = {
+  // BUILD PROMPT LOG 
+  const promptLog: PromptLog = {
     systemPrompt,
     userPrompt,
     fullRequest,
