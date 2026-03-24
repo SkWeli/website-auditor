@@ -100,7 +100,6 @@ No caching - Every audit hits the live page and AI model. Adding Redis caching f
 - **Audit scoring** - Generate a 0–100 score per category so users can track improvements over time
 - **Multi-page crawl** - Extend the tool to audit up to 5 pages and surface site-wide patterns
 - **Caching** - Cache audit results by URL + timestamp to reduce redundant API calls
-- **Export** - Allow users to download the full audit as a PDF report
 - **History** - Save past audits to compare before/after changes
 
 ---
