@@ -146,7 +146,8 @@ export default function Home() {
       y += 3;
     });
 
-    const pageCount = doc.internal.getNumberOfPages();
+    const pageCount = (doc.internal as unknown as { getNumberOfPages: () => number }).getNumberOfPages();
+
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(8);
