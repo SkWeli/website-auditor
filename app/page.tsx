@@ -237,7 +237,7 @@ export default function Home() {
 
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
+                gridTemplateColumns: "repeat(4, 1fr)",
                 gap: 1,
                 border: "1px solid var(--border)",
                 borderRadius: "var(--radius-md)",
