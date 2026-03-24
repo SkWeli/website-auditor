@@ -39,13 +39,12 @@ export default function Home() {
     }
   };
 
-    const downloadReport = async () => {
+  const downloadReport = async () => {
     if (!result) return;
 
     const jsPDFModule = await import("jspdf");
     const jsPDF = jsPDFModule.default;
     const doc = new jsPDF();
-
 
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 20;
@@ -85,7 +84,6 @@ export default function Home() {
 
     addText(`Audited URL: ${result.metrics.url}`, 10, false, "#3b82f6");
     addDivider();
-
     addText("FACTUAL METRICS", 13, true, "#000000");
     y += 2;
 
@@ -147,7 +145,6 @@ export default function Home() {
     });
 
     const pageCount = (doc.internal as unknown as { getNumberOfPages: () => number }).getNumberOfPages();
-
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(8);
@@ -158,7 +155,6 @@ export default function Home() {
     const filename = `audit-${new URL(result.metrics.url).hostname}-${Date.now()}.pdf`;
     doc.save(filename);
   };
-
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", fontFamily: "var(--font-body)" }}>
@@ -171,45 +167,25 @@ export default function Home() {
         top: 0,
         zIndex: 50,
       }}>
-        <div style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          padding: "0 32px",
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}>
+        <div className="header-inner">
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{
               width: 28, height: 28,
               background: "var(--ink)",
               borderRadius: 6,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 13,
-              color: "#fff",
-              fontWeight: 700,
+              fontSize: 13, color: "#fff", fontWeight: 700,
             }}>
               A
             </div>
-            <span style={{
-              fontWeight: 600,
-              fontSize: 14,
-              color: "var(--ink)",
-              letterSpacing: "-0.2px",
-            }}>
+            <span style={{ fontWeight: 600, fontSize: 14, color: "var(--ink)", letterSpacing: "-0.2px" }}>
               Website Auditor
             </span>
           </div>
           <span style={{
-            fontSize: 11,
-            fontWeight: 500,
-            color: "var(--ink-3)",
-            background: "var(--surface-1)",
-            border: "1px solid var(--border)",
-            padding: "4px 12px",
-            borderRadius: 20,
-            letterSpacing: "0.3px",
+            fontSize: 11, fontWeight: 500, color: "var(--ink-3)",
+            background: "var(--surface-1)", border: "1px solid var(--border)",
+            padding: "4px 12px", borderRadius: 20, letterSpacing: "0.3px",
           }}>
             Powered by Gemini 2.5 Flash
           </span>
@@ -218,42 +194,30 @@ export default function Home() {
 
       {/* Hero */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--surface-1)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "72px 32px 64px" }}>
+        <div className="hero-inner">
           <p style={{
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "1.5px",
-            textTransform: "uppercase",
-            color: "var(--accent)",
-            margin: "0 0 16px",
+            fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
+            textTransform: "uppercase", color: "var(--accent)", margin: "0 0 16px",
           }}>
             SEO and UX Analysis
           </p>
           <h1 style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(34px, 5vw, 52px)",
-            fontWeight: 400,
-            color: "var(--ink)",
-            margin: "0 0 18px",
-            lineHeight: 1.15,
-            letterSpacing: "-0.5px",
-            maxWidth: 580,
+            fontSize: "clamp(28px, 5vw, 52px)",
+            fontWeight: 400, color: "var(--ink)", margin: "0 0 18px",
+            lineHeight: 1.15, letterSpacing: "-0.5px", maxWidth: 580,
           }}>
             Understand what your <em>webpage</em> is really saying
           </h1>
           <p style={{
-            fontSize: 15,
-            color: "var(--ink-3)",
-            margin: "0 0 36px",
-            lineHeight: 1.7,
-            maxWidth: 500,
-            fontWeight: 400,
+            fontSize: 15, color: "var(--ink-3)", margin: "0 0 36px",
+            lineHeight: 1.7, maxWidth: 500, fontWeight: 400,
           }}>
             Paste any URL and get factual SEO metrics alongside AI-generated insights
             grounded in real page data.
           </p>
 
-          <div style={{ display: "flex", gap: 10, maxWidth: 600 }}>
+          <div className="hero-input-row">
             <input
               type="url"
               value={url}
@@ -262,12 +226,12 @@ export default function Home() {
               placeholder="https://example.com"
               style={{
                 flex: 1,
+                width: "100%",
                 background: "var(--bg)",
                 border: "1px solid var(--border-dark)",
                 borderRadius: "var(--radius-sm)",
                 padding: "13px 16px",
-                fontSize: 14,
-                color: "var(--ink)",
+                fontSize: 14, color: "var(--ink)",
                 fontFamily: "var(--font-body)",
                 outline: "none",
                 boxShadow: "var(--shadow-sm)",
@@ -291,9 +255,7 @@ export default function Home() {
                 border: "none",
                 borderRadius: "var(--radius-sm)",
                 padding: "13px 28px",
-                fontSize: 13,
-                fontFamily: "var(--font-body)",
-                fontWeight: 600,
+                fontSize: 13, fontFamily: "var(--font-body)", fontWeight: 600,
                 cursor: loading || !url ? "not-allowed" : "pointer",
                 transition: "background 0.15s",
                 whiteSpace: "nowrap",
@@ -305,7 +267,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 32px 80px" }}>
+      {/* Main content */}
+      <div className="content-inner">
 
         {/* Loading */}
         {loading && (
@@ -332,10 +295,8 @@ export default function Home() {
             border: "1px solid var(--danger-border)",
             borderLeft: "3px solid var(--danger)",
             borderRadius: "var(--radius-sm)",
-            padding: "14px 18px",
-            fontSize: 13,
-            color: "var(--danger)",
-            marginBottom: 32,
+            padding: "14px 18px", fontSize: 13,
+            color: "var(--danger)", marginBottom: 32,
           }}>
             {error}
           </div>
@@ -353,18 +314,13 @@ export default function Home() {
                   background: "var(--surface-1)",
                   border: "1px solid var(--border)",
                   borderRadius: "var(--radius-sm)",
-                  padding: "8px 18px",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: "var(--ink-3)",
-                  cursor: "pointer",
-                  letterSpacing: "0.3px",
+                  padding: "8px 18px", fontSize: 12, fontWeight: 600,
+                  color: "var(--ink-3)", cursor: "pointer", letterSpacing: "0.3px",
                 }}
               >
                 Download Report
               </button>
             </div>
-
 
             {/* FACTUAL METRICS */}
             <section style={{ paddingBottom: 56, marginBottom: 56, borderBottom: "1px solid var(--border)" }}>
@@ -377,17 +333,7 @@ export default function Home() {
                 sub="Extracted directly, no AI involvement"
               />
 
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gap: 1,
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius-md)",
-                overflow: "hidden",
-                marginBottom: 12,
-                background: "var(--border)",
-                boxShadow: "var(--shadow-sm)",
-              }}>
+              <div className="metrics-grid">
                 <MetricCard label="Word Count" value={result.metrics.wordCount.toLocaleString()} />
                 <MetricCard label="H1 / H2 / H3" value={`${result.metrics.headings.h1} / ${result.metrics.headings.h2} / ${result.metrics.headings.h3}`} />
                 <MetricCard label="CTAs Found" value={result.metrics.ctaCount} />
@@ -429,12 +375,7 @@ export default function Home() {
                 sub="Generated by Gemini 2.5 Flash, grounded in the metrics above"
               />
 
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(2, 1fr)",
-                gap: 10,
-                marginBottom: 28,
-              }}>
+              <div className="insights-grid">
                 <InsightCard label="SEO" title="SEO Structure" content={result.insights.seoStructure} />
                 <InsightCard label="MSG" title="Messaging Clarity" content={result.insights.messagingClarity} />
                 <InsightCard label="CTA" title="CTA Usage" content={result.insights.ctaUsage} />
@@ -443,12 +384,8 @@ export default function Home() {
               </div>
 
               <p style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "1.2px",
-                textTransform: "uppercase",
-                color: "var(--ink-3)",
-                margin: "0 0 12px",
+                fontSize: 11, fontWeight: 700, letterSpacing: "1.2px",
+                textTransform: "uppercase", color: "var(--ink-3)", margin: "0 0 12px",
               }}>
                 Prioritized Recommendations
               </p>
@@ -470,26 +407,16 @@ export default function Home() {
               <button
                 onClick={() => setShowPromptLog(!showPromptLog)}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  marginBottom: showPromptLog ? 16 : 0,
+                  display: "flex", alignItems: "center", gap: 10,
+                  background: "none", border: "none", cursor: "pointer",
+                  padding: 0, marginBottom: showPromptLog ? 16 : 0,
                 }}
               >
                 <span style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "1.2px",
-                  textTransform: "uppercase",
-                  color: "var(--ink-3)",
-                  background: "var(--surface-1)",
-                  border: "1px solid var(--border)",
-                  padding: "4px 10px",
-                  borderRadius: 20,
+                  fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
+                  textTransform: "uppercase", color: "var(--ink-3)",
+                  background: "var(--surface-1)", border: "1px solid var(--border)",
+                  padding: "4px 10px", borderRadius: 20,
                 }}>
                   Prompt Log
                 </span>
@@ -515,7 +442,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer style={{ borderTop: "1px solid var(--border)", padding: "24px 32px", textAlign: "center" }}>
+      <footer className="footer-inner">
         <p style={{ fontSize: 12, color: "var(--ink-4)", margin: 0 }}>
           Website Auditor. AI-powered SEO and UX analysis.
         </p>
@@ -524,7 +451,6 @@ export default function Home() {
     </main>
   );
 }
-
 
 function SectionHeader({ tag, tagColor, tagBg, tagBorder, title, sub }: {
   tag: string; tagColor: string; tagBg: string; tagBorder: string; title: string; sub: string;
@@ -563,7 +489,8 @@ function MetricCard({ label, value, highlight = false }: {
       </p>
       <p style={{
         fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 400,
-        color: highlight ? "var(--danger)" : "var(--ink)", margin: 0, letterSpacing: "-0.3px", lineHeight: 1,
+        color: highlight ? "var(--danger)" : "var(--ink)", margin: 0,
+        letterSpacing: "-0.3px", lineHeight: 1,
       }}>
         {value}
       </p>
@@ -573,13 +500,8 @@ function MetricCard({ label, value, highlight = false }: {
 
 function MetaRow({ label, value }: { label: string; value: string | null | undefined }) {
   return (
-    <div style={{ padding: "14px 20px", background: "var(--bg)", display: "flex", gap: 24, alignItems: "baseline" }}>
-      <span style={{
-        fontSize: 10, fontWeight: 600, letterSpacing: "0.8px", textTransform: "uppercase",
-        color: "var(--ink-4)", flexShrink: 0, width: 120,
-      }}>
-        {label}
-      </span>
+    <div className="meta-row-inner">
+      <span className="meta-row-label">{label}</span>
       <span style={{ fontSize: 13, color: value ? "var(--ink-2)" : "var(--danger)", lineHeight: 1.5 }}>
         {value || "Not found"}
       </span>
@@ -591,12 +513,14 @@ function InsightCard({ label, title, content, span = 1 }: {
   label: string; title: string; content: string; span?: number;
 }) {
   return (
-    <div style={{
-      background: "var(--bg)", border: "1px solid var(--border)",
-      borderRadius: "var(--radius-md)", padding: "20px 22px",
-      gridColumn: span === 2 ? "span 2" : undefined,
-      boxShadow: "var(--shadow-sm)",
-    }}>
+    <div
+      className={span === 2 ? "insight-span-2" : ""}
+      style={{
+        background: "var(--bg)", border: "1px solid var(--border)",
+        borderRadius: "var(--radius-md)", padding: "20px 22px",
+        boxShadow: "var(--shadow-sm)",
+      }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
         <span style={{
           fontSize: 9, fontWeight: 700, letterSpacing: "1px",
@@ -625,11 +549,7 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
   const c = cfg[rec.priority] || cfg[5];
 
   return (
-    <div style={{
-      background: "var(--bg)", padding: "18px 22px",
-      display: "flex", gap: 16, alignItems: "flex-start",
-      borderBottom: "1px solid var(--border)",
-    }}>
+    <div className="rec-card-inner">
       <span style={{
         fontSize: 9, fontWeight: 800, letterSpacing: "0.5px",
         color: c.color, background: c.bg, padding: "3px 8px",
@@ -661,7 +581,8 @@ function LogBlock({ title, content }: { title: string; content: string }) {
       </div>
       <pre style={{
         padding: "16px", fontSize: 12, color: "var(--ink-3)",
-        overflowX: "auto", whiteSpace: "pre-wrap", lineHeight: 1.65, margin: 0,
+        overflowX: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word",
+        lineHeight: 1.65, margin: 0,
         fontFamily: "'DM Mono', 'Fira Code', 'Courier New', monospace",
         background: "var(--surface-1)",
       }}>

@@ -1,0 +1,72 @@
+{
+  "auditedUrl": "https://aistudio.google.com/",
+  "auditedAt": "2026-03-24T14:02:40.698Z",
+  "metrics": {
+    "url": "https://aistudio.google.com/",
+    "wordCount": 0,
+    "headings": {
+      "h1": 0,
+      "h2": 0,
+      "h3": 0
+    },
+    "ctaCount": 0,
+    "links": {
+      "internal": 0,
+      "external": 0
+    },
+    "images": {
+      "total": 0,
+      "missingAlt": 0,
+      "missingAltPercent": "0%"
+    },
+    "meta": {
+      "title": "Google AI Studio",
+      "description": "The fastest path from prompt to production with Gemini"
+    },
+    "pageTextSample": ""
+  },
+  "promptLog": {
+    "systemPrompt": "You are a senior web strategist at a digital marketing agency \nspecializing in SEO, conversion optimization, content clarity, and UX.\n\nYou will receive structured metrics extracted from a webpage along with a sample of its text content.\n\nYour job is to analyze the data and return a JSON object with specific, grounded insights.\n\nRules:\n- NEVER give generic advice like \"add more headings\" or \"improve your SEO\"\n- ALWAYS reference specific numbers from the metrics (e.g. \"With only 1 H1 and 0 H2s...\")\n- Be direct, specific, and actionable\n- Insights must be grounded strictly in the data provided\n- Return ONLY valid JSON, no markdown, no extra text",
+    "userPrompt": "Analyze the following webpage audit data and return a structured JSON analysis.\n\nURL: https://aistudio.google.com/\n\nEXTRACTED METRICS:\n{\n  \"wordCount\": 0,\n  \"headings\": {\n    \"h1\": 0,\n    \"h2\": 0,\n    \"h3\": 0\n  },\n  \"ctaCount\": 0,\n  \"links\": {\n    \"internal\": 0,\n    \"external\": 0\n  },\n  \"images\": {\n    \"total\": 0,\n    \"missingAlt\": 0,\n    \"missingAltPercent\": \"0%\"\n  },\n  \"meta\": {\n    \"title\": \"Google AI Studio\",\n    \"description\": \"The fastest path from prompt to production with Gemini\"\n  }\n}\n\nPAGE CONTENT SAMPLE (first 3000 chars):\n\"\"\n\nReturn a JSON object with exactly these keys:\n{\n  \"seoStructure\": \"2-3 sentence analysis referencing H1/H2/H3 counts, meta title, meta description\",\n  \"messagingClarity\": \"2-3 sentence analysis referencing word count and content sample\",\n  \"ctaUsage\": \"2-3 sentence analysis referencing ctaCount and link counts\",\n  \"contentDepth\": \"2-3 sentence analysis referencing word count\",\n  \"uxConcerns\": \"2-3 sentence analysis referencing image alt text % and heading hierarchy\",\n  \"recommendations\": [\n    {\n      \"priority\": 1,\n      \"issue\": \"Short issue title\",\n      \"action\": \"Specific action to take\",\n      \"reasoning\": \"Why this matters, referencing the specific metric\"\n    }\n  ]\n}\n\nProvide 3-5 recommendations ordered by priority (1 = most important).",
+    "fullRequest": {
+      "model": "gemini-2.5-flash",
+      "systemPrompt": "You are a senior web strategist at a digital marketing agency \nspecializing in SEO, conversion optimization, content clarity, and UX.\n\nYou will receive structured metrics extracted from a webpage along with a sample of its text content.\n\nYour job is to analyze the data and return a JSON object with specific, grounded insights.\n\nRules:\n- NEVER give generic advice like \"add more headings\" or \"improve your SEO\"\n- ALWAYS reference specific numbers from the metrics (e.g. \"With only 1 H1 and 0 H2s...\")\n- Be direct, specific, and actionable\n- Insights must be grounded strictly in the data provided\n- Return ONLY valid JSON, no markdown, no extra text",
+      "userPrompt": "Analyze the following webpage audit data and return a structured JSON analysis.\n\nURL: https://aistudio.google.com/\n\nEXTRACTED METRICS:\n{\n  \"wordCount\": 0,\n  \"headings\": {\n    \"h1\": 0,\n    \"h2\": 0,\n    \"h3\": 0\n  },\n  \"ctaCount\": 0,\n  \"links\": {\n    \"internal\": 0,\n    \"external\": 0\n  },\n  \"images\": {\n    \"total\": 0,\n    \"missingAlt\": 0,\n    \"missingAltPercent\": \"0%\"\n  },\n  \"meta\": {\n    \"title\": \"Google AI Studio\",\n    \"description\": \"The fastest path from prompt to production with Gemini\"\n  }\n}\n\nPAGE CONTENT SAMPLE (first 3000 chars):\n\"\"\n\nReturn a JSON object with exactly these keys:\n{\n  \"seoStructure\": \"2-3 sentence analysis referencing H1/H2/H3 counts, meta title, meta description\",\n  \"messagingClarity\": \"2-3 sentence analysis referencing word count and content sample\",\n  \"ctaUsage\": \"2-3 sentence analysis referencing ctaCount and link counts\",\n  \"contentDepth\": \"2-3 sentence analysis referencing word count\",\n  \"uxConcerns\": \"2-3 sentence analysis referencing image alt text % and heading hierarchy\",\n  \"recommendations\": [\n    {\n      \"priority\": 1,\n      \"issue\": \"Short issue title\",\n      \"action\": \"Specific action to take\",\n      \"reasoning\": \"Why this matters, referencing the specific metric\"\n    }\n  ]\n}\n\nProvide 3-5 recommendations ordered by priority (1 = most important)."
+    },
+    "rawModelOutput": "{\n  \"seoStructure\": \"The page has a clear meta title (\\\"Google AI Studio\\\") and description (\\\"The fastest path from prompt to production with Gemini\\\"), which is a strong foundation. However, the complete absence of H1 (0), H2 (0), and H3 (0) headings indicates a severe lack of structural organization for both search engines and users.\",\n  \"messagingClarity\": \"With a word count of 0 and no content sample provided, there is absolutely no textual content on the page to convey any message or value proposition. This makes it impossible for users to understand what Google AI Studio offers.\",\n  \"ctaUsage\": \"The page completely lacks any calls-to-action (0 CTA count) and provides no internal (0) or external (0) links. This means users are given no clear next steps or pathways to engage further with the product or explore related information.\",\n  \"contentDepth\": \"A word count of 0 signifies a complete absence of textual content, indicating no depth or substance for users to consume. This severely limits the page's ability to inform, persuade, or provide value.\",\n  \"uxConcerns\": \"The complete absence of any headings (0 H1, 0 H2, 0 H3) creates a very poor user experience, as there is no visual hierarchy to guide users through information. While 0% of images are missing alt text, this is due to the total absence of images (0), not proper implementation.\",\n  \"recommendations\": [\n    {\n      \"priority\": 1,\n      \"issue\": \"Missing foundational content and heading structure\",\n      \"action\": \"Develop and implement comprehensive textual content for the page, including a single H1 for the main topic and multiple H2/H3 headings to organize information logically.\",\n      \"reasoning\": \"With a word count of 0 and no H1, H2, or H3 headings, the page currently offers no value to users or search engines, critically harming SEO and user comprehension.\"\n    },\n    {\n      \"priority\": 2,\n      \"issue\": \"Lack of clear calls-to-action for user engagement\",\n      \"action\": \"Integrate prominent and relevant Calls-to-Action (CTAs) throughout the page to guide users on their next steps, such as \\\"Try Gemini\\\" or \\\"Explore Documentation.\\\"\",\n      \"reasoning\": \"The current ctaCount of 0 means users have no clear direction on how to interact further with Google AI Studio, preventing conversions and progression through the user journey.\"\n    },\n    {\n      \"priority\": 3,\n      \"issue\": \"Isolated page with no internal or external navigation\",\n      \"action\": \"Add relevant internal links to other sections of the Google AI Studio site or related products, and external links to supporting documentation or resources.\",\n      \"reasoning\": \"With 0 internal and 0 external links, the page is an isolated experience, hindering user navigation, SEO crawlability, and the ability to provide additional context.\"\n    },\n    {\n      \"priority\": 4,\n      \"issue\": \"Absence of visual content and potential for improved engagement\",\n      \"action\": \"Introduce relevant images, screenshots, or videos to enhance user engagement and break up any future text content, ensuring all visuals have descriptive alt text.\",\n      \"reasoning\": \"While there are currently 0 images, adding visuals can significantly improve UX. Proactively ensuring alt text is included addresses accessibility and SEO for future content.\"\n    }\n  ]\n}",
+    "parsedAt": "2026-03-24T14:02:40.698Z"
+  },
+  "insights": {
+    "seoStructure": "The page has a clear meta title (\"Google AI Studio\") and description (\"The fastest path from prompt to production with Gemini\"), which is a strong foundation. However, the complete absence of H1 (0), H2 (0), and H3 (0) headings indicates a severe lack of structural organization for both search engines and users.",
+    "messagingClarity": "With a word count of 0 and no content sample provided, there is absolutely no textual content on the page to convey any message or value proposition. This makes it impossible for users to understand what Google AI Studio offers.",
+    "ctaUsage": "The page completely lacks any calls-to-action (0 CTA count) and provides no internal (0) or external (0) links. This means users are given no clear next steps or pathways to engage further with the product or explore related information.",
+    "contentDepth": "A word count of 0 signifies a complete absence of textual content, indicating no depth or substance for users to consume. This severely limits the page's ability to inform, persuade, or provide value.",
+    "uxConcerns": "The complete absence of any headings (0 H1, 0 H2, 0 H3) creates a very poor user experience, as there is no visual hierarchy to guide users through information. While 0% of images are missing alt text, this is due to the total absence of images (0), not proper implementation.",
+    "recommendations": [
+      {
+        "priority": 1,
+        "issue": "Missing foundational content and heading structure",
+        "action": "Develop and implement comprehensive textual content for the page, including a single H1 for the main topic and multiple H2/H3 headings to organize information logically.",
+        "reasoning": "With a word count of 0 and no H1, H2, or H3 headings, the page currently offers no value to users or search engines, critically harming SEO and user comprehension."
+      },
+      {
+        "priority": 2,
+        "issue": "Lack of clear calls-to-action for user engagement",
+        "action": "Integrate prominent and relevant Calls-to-Action (CTAs) throughout the page to guide users on their next steps, such as \"Try Gemini\" or \"Explore Documentation.\"",
+        "reasoning": "The current ctaCount of 0 means users have no clear direction on how to interact further with Google AI Studio, preventing conversions and progression through the user journey."
+      },
+      {
+        "priority": 3,
+        "issue": "Isolated page with no internal or external navigation",
+        "action": "Add relevant internal links to other sections of the Google AI Studio site or related products, and external links to supporting documentation or resources.",
+        "reasoning": "With 0 internal and 0 external links, the page is an isolated experience, hindering user navigation, SEO crawlability, and the ability to provide additional context."
+      },
+      {
+        "priority": 4,
+        "issue": "Absence of visual content and potential for improved engagement",
+        "action": "Introduce relevant images, screenshots, or videos to enhance user engagement and break up any future text content, ensuring all visuals have descriptive alt text.",
+        "reasoning": "While there are currently 0 images, adding visuals can significantly improve UX. Proactively ensuring alt text is included addresses accessibility and SEO for future content."
+      }
+    ]
+  }
+}
