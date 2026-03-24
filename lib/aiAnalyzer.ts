@@ -93,14 +93,14 @@ Provide 3-5 recommendations ordered by priority (1 = most important).`;
 
   // FULL REQUEST OBJECT (logged for transparency) 
   const fullRequest = {
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     systemPrompt,
     userPrompt,
   };
 
   // CALL THE MODEL 
   const model = client.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     generationConfig: {
       responseMimeType: "application/json",
       temperature: 0.4,
